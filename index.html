@@ -19,7 +19,7 @@
     <hr class="separator">
 
     <div id="menu">
-        <h2 class="fw-title">Определение версии прошивки</h2>
+        <h2 class="fw-title">Определение прошивки</h2>
         <p class="fw-range">Определение <span class="range-highlight">PlayStation 4</span></p>
         
         <div class="status-bar">
@@ -40,29 +40,29 @@
         msgs.innerHTML = msg;
     }
 
-    // ========== كاش ==========
+    // ========== Кэш ==========
     var appCache = window.applicationCache;
     if (appCache) {
         appCache.addEventListener('updateready', function() {
             try { appCache.swapCache(); } catch(e) {}
-            updateStatus('🔄 Update ready -- reloading...');
+            updateStatus('🔄 Обновление готово — перезапуск…');
             setTimeout(function() { location.reload(); }, 500);
         }, false);
         
         appCache.addEventListener('cached', function() {
-            updateStatus('✅ Cached -- running...');
+            updateStatus('✅ Закэшировано — запуск...');
         }, false);
         
         appCache.addEventListener('noupdate', function() {
-            updateStatus('✅ Cache ready -- running...');
+            updateStatus('✅ Кэш готов — запуск...');
         }, false);
         
         appCache.addEventListener('error', function() {
-            updateStatus('⚠️ Cache error -- running anyway...');
+            updateStatus('⚠️ Ошибка кэша -- продолжаем запуск...');
         }, false);
     }
 
-    // ========== قراءة الإصدار ==========
+    // ========== Чтение версии ==========
     var uaFull = navigator.userAgent;
     var match = uaFull.match(/PlayStation 4[ \/](\d+)\.(\d+)/i);
     var isPS4 = match !== null;
@@ -86,25 +86,25 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         if (!isPS4) {
-            updateStatus('⚠️ This page is for PS4 only!');
+            updateStatus('⚠️ Эта страница предназначена только для PS4!');
             msgs.className = 'status-text error';
             return;
         }
 
         if (bug === "lapse") {
-            updateStatus('✅ Detected PS4 Firmware: ' + fwVersion);
+            updateStatus('✅ Обнаруженная версия прошивки PS4: ' + fwVersion);
             setTimeout(function() {
-                updateStatus('🚀 Loading Lapse exploit...');
+                updateStatus('🚀 Загрузка эксплойта Lapse...');
                 window.location.replace('run_lapse.html?bug=lapse');
             }, 1500);
         } else if (bug === "poops") {
-            updateStatus('✅ Detected PS4 Firmware: ' + fwVersion);
+            updateStatus('✅ Обнаруженная версия прошивки PS4: ' + fwVersion);
             setTimeout(function() {
-                updateStatus('🚀 Loading Poops exploit...');
+                updateStatus('🚀 Загрузка эксплойта Poops...');
                 window.location.replace('run_poops.html?bug=poops');
             }, 1500);
         } else {
-            updateStatus('❌ Unsupported Firmware: ' + fwVersion);
+            updateStatus('❌ Несовместимая Прошивка: ' + fwVersion);
             msgs.className = 'status-text error';
         }
     });
