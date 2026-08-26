@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PS4 PS5 - Exploit Host</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 class="main-title">
+            <span class="ps4-text">PS4</span>
+            <span class="ps5-text">WebKit Хост</span>
+        </h1>
+        <div class="version-badge">Взлом для 11.50-13.00</div>
+    </header>
+    
+    <hr class="separator">
+
+    <div id="menu">
+        <h2 class="fw-title">Определение версии прошивки</h2>
+        <p class="fw-range">Определение <span class="range-highlight">PlayStation 4</span></p>
+        
+        <div class="status-bar">
+            <span id="msgs" class="status-text loading">⏳ Запуск...</span>
+        </div>
+
+        <footer>
+            <p class="credit">Специально для 4PDA Sony PlayStation 5 - Взлом</p>
+            <p class="thanks">Особая благодарность всем разработчикам сцены</p>
+        </footer>
+    </div>
+</div>
+
+<script>
+    var msgs = document.getElementById('msgs');
+
+    function updateStatus(msg) {
+        msgs.innerHTML = msg;
+    }
+
+    // ========== كاش ==========
+    var appCache = window.applicationCache;
+    if (appCache) {
+        appCache.addEventListener('updateready', function() {
+            try { appCache.swapCache(); } catch(e) {}
+            updateStatus('🔄 Update ready -- reloading...');
+            setTimeout(function() { location.reload(); }, 500);
+        }, false);
+        
+        appCache.addEventListener('cached', function() {
+            updateStatus('✅ Cached -- running...');
+        }, false);
+        
+        appCache.addEventListener('noupdate', function() {
+            updateStatus('✅ Cache ready -- running...');
+        }, false);
+        
+        appCache.addEventListener('error', function() {
+            updateStatus('⚠️ Cache error -- running anyway...');
+        }, false);
+    }
+
+    // ========== قراءة الإصدار ==========
+    var uaFull = navigator.userAgent;
+    var match = uaFull.match(/PlayStation 4[ \/](\d+)\.(\d+)/i);
+    var isPS4 = match !== null;
+    var fwVersion = isPS4 ? match[1] + "." + match[2] : "Unknown";
+    var fwNum = parseFloat(fwVersion);
+    var key = null;
+    var bug = null;
+
+    if (match) {
+        key = match[1] + "." + match[2];
+        fwNum = parseInt(match[1], 10) * 100 + parseInt(match[2], 10);
+    }
+
+    if (isPS4) {
+        if (fwNum <= 1202) {
+            bug = "lapse";
+        } else if (fwNum >= 1250) {
+            bug = "poops";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        if (!isPS4) {
+            updateStatus('⚠️ This page is for PS4 only!');
+            msgs.className = 'status-text error';
+            return;
+        }
+
+        if (bug === "lapse") {
+            updateStatus('✅ Detected PS4 Firmware: ' + fwVersion);
+            setTimeout(function() {
+                updateStatus('🚀 Loading Lapse exploit...');
+                window.location.replace('run_lapse.html?bug=lapse');
+            }, 1500);
+        } else if (bug === "poops") {
+            updateStatus('✅ Detected PS4 Firmware: ' + fwVersion);
+            setTimeout(function() {
+                updateStatus('🚀 Loading Poops exploit...');
+                window.location.replace('run_poops.html?bug=poops');
+            }, 1500);
+        } else {
+            updateStatus('❌ Unsupported Firmware: ' + fwVersion);
+            msgs.className = 'status-text error';
+        }
+    });
+</script>
+</body>
+</html>

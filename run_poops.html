@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mustafa PS4 PS5 - Poops Chain</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 class="main-title">
+            <span class="highlight">Mustafa</span>
+            <span class="ps4-text">PS4</span>
+            <span class="ps5-text">PS5</span>
+        </h1>
+        <div class="subtitle">Exploit Host</div>
+        <div class="version-badge">POOPS CHAIN</div>
+    </header>
+    
+    <hr class="separator">
+
+    <div id="menu">
+        <h2 class="fw-title">⚡ Poops Exploit</h2>
+        <p class="fw-range">Firmware <span class="range-highlight">12.50+</span></p>
+        
+        <div class="status-bar">
+            <span id="state" class="status-text loading">⏳ Please wait...</span>
+        </div>
+
+        <!-- السجل مخفي -->
+        <div id="out" style="display:none;"></div>
+
+        <footer>
+            <p class="credit">Designed by <a href="#" class="credit-link">Mustafa</a></p>
+        </footer>
+    </div>
+</div>
+
+<script type="module">
+    // استيراد الثغرة
+    import("./chain_poops.js").catch(function(e) {
+        var stateEl = document.getElementById("state");
+        stateEl.innerHTML = "❌ Failed!";
+        stateEl.className = "status-text error";
+    });
+</script>
+</body>
+</html>
