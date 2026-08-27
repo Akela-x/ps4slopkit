@@ -132,7 +132,7 @@ let allDone = false;
             ? parseInt(params.get("spray"), 10) : 0x100;
         const { key, off } = offsetsFor(navigator.userAgent);
         mark("FW", key || "(not a PS4 UA)");
-        if (!off) { state("no offsets for this firmware", "bad"); return; }
+        if (!off) { state("для этой прошивки оффсеты отсутствую", "bad"); return; }
         mark("FW-STATUS", off.fw_status || "none");
         mark("PLAN", "iov_workers=" + NUM_IOV_WORKER + " attempts=" + NUM_ATTEMPT
             + " spray=" + NUM_IOV_SPRAY
